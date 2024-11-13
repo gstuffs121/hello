@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feedback Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f7f6;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .form-container {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      max-width: 400px;
+      width: 100%;
+      margin: 20px;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    label {
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 5px;
+      display: block;
+    }
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+      resize: vertical;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .error-message {
+      color: red;
+      font-size: 12px;
+      display: none;
+    }
+    .thank-you-section {
+      display: none;
+      text-align: center;
+      font-size: 18px;
+      padding: 20px;
+    }
+    .thank-you-image {
+      width: 100px;
+      height: 100px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container" id="feedback-form">
+    <h2>Feedback Form</h2>
+    <form id="feedbackForm" onsubmit="return submitFeedback(event)">
+      <label for="feedback">Your Feedback:</label>
+      <textarea id="feedback" name="feedback" rows="4" required></textarea>
+      <div class="error-message" id="feedback-error">Please provide feedback.</div>
+
+      <button type="submit">Submit Feedback</button>
+    </form>
+  </div>
+
+  <div id="thank-you-section" class="thank-you-section">
+    <h2>Thank You!</h2>
+    <p id="thank-you-message"></p>
+    <img src="https://via.placeholder.com/100" alt="Thank You" class="thank-you-image" />
+  </div>
+
+  <script>
+    function submitFeedback(event) {
+      event.preventDefault(); // Prevent form submission from refreshing the page
+
+      const feedback = document.getElementById('feedback').value.trim();
+      if (!feedback) {
+        document.getElementById('feedback-error').style.display = 'block';
+        return false; // Don't submit if feedback is empty
+      }
+
+      // Hide feedback form and show thank-you section
+      document.getElementById('feedback-form').style.display = 'none';
+      document.getElementById('thank-you-section').style.display = 'block';
+
+      // Display the feedback message
+      document.getElementById('thank-you-message').innerText = `We appreciate your feedback: "${feedback}"`;
+      return true;
+    }
+  </script>
+
+</body>
+</html>

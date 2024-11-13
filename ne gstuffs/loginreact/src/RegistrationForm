@@ -1,0 +1,277 @@
+import React, { useState } from 'react';
+
+const RegistrationForm = () => {
+  const [formData, setFormData] = useState({
+    fullName: '',
+    username: '',
+    email: '',
+    phoneNumber: '',
+    address: '',
+    password: '',
+    confirmPassword: '',
+    termsAccepted: false
+  });
+
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === 'checkbox' ? checked : value
+    });
+  };
+
+  const validateForm = () => {
+    if (!formData.username || !formData.email || !formData.password) {
+      return 'Please fill in all required fields.';
+    }
+    if (!formData.termsAccepted) {
+      return 'You must accept the terms and conditions.';
+    }
+    if (formData.password !== formData.confirmPassword) {
+      return 'Passwords do not match.';
+    }
+    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      return 'Please enter a valid email address.';
+    }
+    if (formData.password.length < 6) {
+      return 'Password must be at least 6 characters long.';
+    }
+    return '';
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validationError = validateForm();
+    if (validationError) {
+      setError(validationError);
+      setSuccess('');
+      return;
+    }
+    
+    setError('');
+    setSuccess('Registration successful!');
+    console.log('Form data:', formData);
+
+    setFormData({
+      fullName: '',
+      username: '',
+      email: '',
+      phoneNumber: '',
+      address: '',
+      password: '',
+      confirmPassword: '',
+      termsAccepted: false
+    });
+  };
+
+  const formStyle = {
+    maxWidth: '500px',
+    margin: '0 auto',
+    padding: '20px',
+    boxShadow: '0 0 10px rgba(0,0,0,0.1)',
+    borderRadius: '8px',
+    backgroundColor: '#fff'
+  };
+
+  const titleStyle = {
+    textAlign: 'center',
+    color: '#333',
+    marginBottom: '20px'
+  };
+
+  const inputGroupStyle = {
+    marginBottom: '15px'
+  };
+
+  const labelStyle = {
+    display: 'block',
+    marginBottom: '5px',
+    color: '#555'
+  };
+
+  const inputStyle = {
+    width: '100%',
+    padding: '8px',
+    borderRadius: '4px',
+    border: '1px solid #ddd',
+    marginBottom: '10px'
+  };
+
+  const textareaStyle = {
+    width: '100%',
+    padding: '8px',
+    borderRadius: '4px',
+    border: '1px solid #ddd',
+    marginBottom: '10px',
+    minHeight: '100px'
+  };
+
+  const checkboxContainerStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    marginBottom: '15px',
+    gap: '8px'
+  };
+
+  const checkboxStyle = {
+    margin: '0'
+  };
+
+  const buttonStyle = {
+    width: '100%',
+    padding: '10px',
+    backgroundColor: '#007bff',
+    color: 'white',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer'
+  };
+
+  const errorStyle = {
+    color: '#dc3545',
+    padding: '10px',
+    marginBottom: '10px',
+    backgroundColor: '#f8d7da',
+    borderRadius: '4px',
+    textAlign: 'center'
+  };
+
+  const successStyle = {
+    color: '#28a745',
+    padding: '10px',
+    marginBottom: '10px',
+    backgroundColor: '#d4edda',
+    borderRadius: '4px',
+    textAlign: 'center'
+  };
+
+  const linkStyle = {
+    color: '#007bff',
+    textDecoration: 'none'
+  };
+
+  return (
+    <div style={formStyle}>
+      <h2 style={titleStyle}>Registration Form</h2>
+
+      {success && <div style={successStyle}>{success}</div>}
+      {error && <div style={errorStyle}>{error}</div>}
+
+      <form onSubmit={handleSubmit}>
+        <div style={inputGroupStyle}>
+          <label style={labelStyle} htmlFor="fullName">Full Name</label>
+          <input
+            style={inputStyle}
+            type="text"
+            id="fullName"
+            name="fullName"
+            value={formData.fullName}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div style={inputGroupStyle}>
+          <label style={labelStyle} htmlFor="username">Username</label>
+          <input
+            style={inputStyle}
+            type="text"
+            id="username"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div style={inputGroupStyle}>
+          <label style={labelStyle} htmlFor="email">Email</label>
+          <input
+            style={inputStyle}
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div style={inputGroupStyle}>
+          <label style={labelStyle} htmlFor="phoneNumber">Phone Number(10)</label>
+          <input
+            style={inputStyle}
+            type="tel"
+            id="phoneNumber"
+            name="phoneNumber"
+            value={formData.phoneNumber}
+            onChange={handleChange}
+            placeholder="(123) 456-7890"
+          />
+        </div>
+
+        <div style={inputGroupStyle}>
+          <label style={labelStyle} htmlFor="address">Address</label>
+          <textarea
+            style={textareaStyle}
+            id="address"
+            name="address"
+            value={formData.address}
+            onChange={handleChange}
+            rows="4"
+            placeholder="Street, City, State, Zip"
+          />
+        </div>
+
+        <div style={inputGroupStyle}>
+          <label style={labelStyle} htmlFor="password">Password</label>
+          <input
+            style={inputStyle}
+            type="password"
+            id="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div style={inputGroupStyle}>
+          <label style={labelStyle} htmlFor="confirmPassword">Confirm Password</label>
+          <input
+            style={inputStyle}
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div style={checkboxContainerStyle}>
+          <input
+            style={checkboxStyle}
+            type="checkbox"
+            id="termsAccepted"
+            name="termsAccepted"
+            checked={formData.termsAccepted}
+            onChange={handleChange}
+          />
+          <label htmlFor="termsAccepted">
+            I agree to the <a href="#" style={linkStyle}>Terms and Conditions</a>
+            {' '}and{' '}
+            <a href="#" style={linkStyle}>Privacy Policy</a>
+          </label>
+        </div>
+
+        <button style={buttonStyle} type="submit">Register</button>
+      </form>
+    </div>
+  );
+};
+
+export default RegistrationForm;

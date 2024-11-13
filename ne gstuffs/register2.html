@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f7f6;
+      margin: 0;
+    }
+    .form-container {
+      background-color: white;
+      padding: 20px;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    label {
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 5px;
+      display: block;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .error-message {
+      color: red;
+      font-size: 12px;
+      display: none;
+    }
+    .thank-you-section {
+      display: none;
+      text-align: center;
+    }
+    .thank-you-image {
+      width: 100px;
+      height: 100px;
+      margin-top: 20px;
+    }
+    .thank-you-message {
+      display: none;
+      margin-top: 20px;
+      font-size: 18px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Registration Form -->
+  <div id="registration-form" class="form-container">
+    <h2>Registration Form</h2>
+    <form id="regForm" onsubmit="return submitRegistration(event)">
+      <label for="username">Username:</label>
+      <input type="text" id="username" required>
+      <div class="error-message" id="username-error">Username is required.</div>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" required>
+      <div class="error-message" id="email-error">Please enter a valid email.</div>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" required minlength="6">
+      <div class="error-message" id="password-error">Password must be at least 6 characters.</div>
+
+      <button type="submit">Register</button>
+    </form>
+  </div>
+
+  <!-- Thank You Section (hidden initially) -->
+  <div id="thank-you-section" class="thank-you-section">
+    <!-- Image first -->
+    <img src="E:\images\Registration-Successful-Check.png" alt="Thank You" class="thank-you-image" id="thank-you-image">
+    <!-- Then the text -->
+    <p class="thank-you-message" id="thank-you-message"></p>
+  </div>
+
+  <script>
+    // Function to handle the registration form submission
+    function submitRegistration(event) {
+      event.preventDefault(); // Prevent page refresh
+
+      // Get form input values
+      const username = document.getElementById('username').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      let valid = true;
+
+      // Clear any previous error messages
+      document.querySelectorAll('.error-message').forEach(e => e.style.display = 'none');
+
+      // Validate the form inputs
+      if (!username) {
+        document.getElementById('username-error').style.display = 'block';
+        valid = false;
+      }
+      if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(email)) {
+        document.getElementById('email-error').style.display = 'block';
+        valid = false;
+      }
+      if (password.length < 6) {
+        document.getElementById('password-error').style.display = 'block';
+        valid = false;
+      }
+
+      // If all validations pass, hide the registration form and show the thank-you section
+      if (valid) {
+        // Log form data to the console
+        console.log("Username:", username);
+        console.log("Email:", email);
+        console.log("Password:", password);
+
+        // Hide the registration form
+        document.getElementById('registration-form').style.display = 'none';
+        
+        // Show the thank you section
+        const thankYouSection = document.getElementById('thank-you-section');
+        thankYouSection.style.display = 'block';
+
+        // Show the image first
+        const thankYouImage = document.getElementById('thank-you-image');
+        thankYouImage.style.display = 'block';
+
+        // After a short delay, show the thank you message
+        setTimeout(function() {
+          const thankYouMessage = document.getElementById('thank-you-message');
+          thankYouMessage.innerText = `Thank you for registering, ${username}!`;
+          thankYouMessage.style.display = 'block'; // Show the message
+        }, 1000); // 1 second delay for showing the message
+      }
+
+      return valid; // Return false if form is invalid
+    }
+  </script>
+
+</body>
+</html>

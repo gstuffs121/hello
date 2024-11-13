@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration and Feedback Forms</title>
+  <style>
+    body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f4f7f6; margin: 0; }
+    .form-container { background: white; padding: 20px; max-width: 400px; width: 100%; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 8px; }
+    h2 { text-align: center; color: #333; }
+    label { font-size: 14px; color: #333; margin-bottom: 5px; display: block; }
+    input, textarea { width: 100%; padding: 8px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
+    button { width: 100%; padding: 10px; background-color: #4CAF50; color: white; border: none; font-size: 16px; cursor: pointer; border-radius: 4px; }
+    button:hover { background-color: #45a049; }
+    .error-message { color: red; font-size: 12px; display: none; }
+    .form-container input:invalid, .form-container textarea:invalid { border-color: red; }
+    .form-container input:valid, .form-container textarea:valid { border-color: green; }
+    .display-section { display: none; text-align: center; }
+    .thank-you-image { width: 100px; height: 100px; margin-top: 20px; }
+  </style>
+</head>
+<body>
+
+  <div id="registration-form" class="form-container">
+    <h2>Registration Form</h2>
+    <form id="regForm" onsubmit="return submitRegistration(event)">
+      <label for="username">Username:</label>
+      <input type="text" id="username" required>
+      <div class="error-message" id="username-error">Username is required.</div>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" required>
+      <div class="error-message" id="email-error">Please enter a valid email.</div>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" required minlength="6">
+      <div class="error-message" id="password-error">Password must be at least 6 characters.</div>
+
+      <button type="submit">Register</button>
+    </form>
+  </div>
+
+  <div id="feedback-form" class="form-container" style="display: none;">
+    <h2>Feedback Form</h2>
+    <form id="feedbackForm" onsubmit="return submitFeedback(event)">
+      <label for="feedback">Your Feedback:</label>
+      <textarea id="feedback" required></textarea>
+      <div class="error-message" id="feedback-error">Feedback is required.</div>
+
+      <button type="submit">Submit Feedback</button>
+    </form>
+  </div>
+
+  <div id="display-section" class="display-section">
+    <h2>Thank You!</h2>
+    <p id="display-message"></p>
+    <img src="e:\images\download.png" alt="Thank You" class="thank-you-image" id="thank-you-image">
+  </div>
+
+  <script>
+    function submitRegistration(event) {
+      event.preventDefault();
+      const username = document.getElementById('username').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      let valid = true;
+
+      // Clear previous errors
+      document.querySelectorAll('.error-message').forEach(e => e.style.display = 'none');
+
+      // Validation
+      if (!username) { document.getElementById('username-error').style.display = 'block'; valid = false; }
+      if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(email)) { document.getElementById('email-error').style.display = 'block'; valid = false; }
+      if (password.length < 6) { document.getElementById('password-error').style.display = 'block'; valid = false; }
+
+      if (valid) {
+        document.getElementById('registration-form').style.display = 'none';
+        document.getElementById('feedback-form').style.display = 'block';
+      }
+      return valid;
+    }
+
+    function submitFeedback(event) {
+      event.preventDefault();
+      const feedback = document.getElementById('feedback').value.trim();
+      if (!feedback) { document.getElementById('feedback-error').style.display = 'block'; return false; }
+
+      const username = document.getElementById('username').value;
+      document.getElementById('display-message').innerText = `Thank you, ${username}! Your feedback: "${feedback}" has been received.`;
+      document.getElementById('feedback-form').style.display = 'none';
+      document.getElementById('display-section').style.display = 'block';
+      
+      // Show Thank You image
+      document.getElementById('thank-you-image').style.display = 'block';
+
+      return true;
+    }
+  </script>
+
+</body>
+</html>

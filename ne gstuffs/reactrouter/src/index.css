@@ -1,0 +1,43 @@
+/* Set background color for the entire app */
+body {
+  background-color:gray;
+  color: #fff; /* White text for better readability on black background */
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Style the navigation bar */
+nav {
+  background-color:gray; /* Dark background for the nav */
+  padding: 10px 20px;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex; /* Align the nav items in a row */
+  justify-content: center; /* Center the nav items */
+}
+
+li {
+  margin: 0 15px; /* Space between the nav items */
+}
+
+a {
+  color:white; /* White color for links */
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+a:hover {
+  color:yellow; /* Green hover effect for links */
+}
+
+/* Style for each page's content */
+h1 {
+  text-align: center;
+  margin-top: 20px;
+}
